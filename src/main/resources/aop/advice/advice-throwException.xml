@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="greetThrowExceptionAdvice" class="com.hei123.demo.advice.GreetThrowExceptionAdvice"/>
+    <bean id="forumService" class="com.hei123.demo.service.impl.ForumServiceImpl"/>
+    <bean id="forumServiceProxy" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="interceptorNames" value="greetThrowExceptionAdvice"/>
+        <property name="target" ref="forumService"/>
+        <property name="proxyTargetClass" value="true"/>
+    </bean>
+</beans>

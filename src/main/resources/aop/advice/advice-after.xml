@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="greetAfterAdvice" class="com.hei123.demo.advice.GreetAfterAdvice"/>
+    <bean id="waiter" class="com.hei123.demo.service.impl.WaiterImpl"/>
+    <bean id="waiterProxy" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="proxyInterfaces" value="com.hei123.demo.service.IWaiter"/>
+        <property name="interceptorNames" value="greetAfterAdvice"/>
+        <property name="proxyTargetClass" value="true"/>
+        <property name="target" ref="waiter"/>
+    </bean>
+
+</beans>

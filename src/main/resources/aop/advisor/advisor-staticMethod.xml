@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="waiterTarget" class="com.hei123.demo.service.impl.WaiterImpl"/>
+    <bean id="sellerTarget" class="com.hei123.demo.service.impl.SellerImpl"/>
+    <bean id="greetBeforeAdvice" class="com.hei123.demo.advice.GreetBeforeAdvice"/>
+    <bean id="greetingStaticMethodMatcherAdvisor" class="com.hei123.demo.advisor.GreetingStaticMethodMatcherAdvisor">
+        <property name="advice" ref="greetBeforeAdvice"/>
+    </bean>
+
+    <bean id="waiter" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="interceptorNames" value="greetingStaticMethodMatcherAdvisor"/>
+        <property name="proxyTargetClass" value="true"/>
+        <property name="target" ref="waiterTarget"/>
+    </bean>
+
+    <bean id="seller" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="interceptorNames" value="greetingStaticMethodMatcherAdvisor"/>
+        <property name="proxyTargetClass" value="true"/>
+        <property name="target" ref="sellerTarget"/>
+    </bean>
+
+
+</beans>

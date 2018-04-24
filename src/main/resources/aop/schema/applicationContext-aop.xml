@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd
+       http://www.springframework.org/schema/aop
+       http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+    <bean id="greetBeforeAdvice" class="com.hei123.demo.advice.GreetBeforeAdvice"/>
+
+    <bean id="adviceMethod" class="com.hei123.demo.schema.AdviceMethod"/>
+
+    <bean id="waiter" class="com.hei123.demo.service.impl.WaiterImpl"/>
+
+    <aop:config proxy-target-class="false">
+        <aop:advisor advice-ref="greetBeforeAdvice" pointcut="execution(* greetTo(..))"/>
+    </aop:config>
+
+    <aop:config proxy-target-class="true">
+        <aop:aspect ref="adviceMethod">
+            <aop:before pointcut="execution(* greetTo(..))" method="preGreeting"/>
+        </aop:aspect>
+
+    </aop:config>
+
+
+    <!--配合使用时可以不用配置 切面上加注解@Component-->
+    <!--<aop:aspectj-autoproxy/>-->
+    <!--<context:component-scan base-package="com.hei123"/>-->
+
+
+</beans>

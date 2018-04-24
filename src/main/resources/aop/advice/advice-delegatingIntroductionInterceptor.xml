@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="performanceMonitor" class="com.hei123.demo.advice.ControllablePerformanceMonitor"/>
+    <bean id="forumService" class="com.hei123.demo.service.impl.ForumServiceImpl"/>
+    <bean id="proxyForumService" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="interfaces" value="com.hei123.demo.service.Monitorable"/>
+        <property name="target" ref="forumService"/>
+        <property name="interceptorNames" value="performanceMonitor"/>
+        <property name="proxyTargetClass" value="true"/>
+    </bean>
+
+</beans>
